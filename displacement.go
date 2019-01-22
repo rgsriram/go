@@ -24,9 +24,10 @@ func main() {
 	fmt.Println("Enter inital displacement: ")
 	fmt.Scan(&displacement)
 
+	fn := GenDisplaceFn(acceleration, velocity, displacement)
+
 	fmt.Println("Enter the time to wait: ")
 	fmt.Scan(&timeToWait)
-
-	fn := GenDisplaceFn(acceleration, velocity, displacement)
+	
 	fmt.Println(fn(timeToWait))
 }
