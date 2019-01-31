@@ -97,16 +97,16 @@ func PrintAction(a Animal, action string) {
 
 func main() {
 
-	reader := bufio.NewReader(os.Stdin)
 	a := make(map[string]Animal)
 
 	for {
 		fmt.Print("> ")
-		text, _ := reader.ReadString('\n')
 
-		input := strings.Trim(text, " \n")
+		scanner := bufio.NewScanner(os.Stdin)
+		scanner.Scan() // use `for scanner.Scan()` to keep reading
+		line := scanner.Text()
 
-		s := strings.Split(input, " ")
+		s := strings.Split(line, " ")
 
 		if len(s) < 3 {
 			fmt.Println("Invalid input.")
