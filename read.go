@@ -11,6 +11,8 @@ import (
 type person struct {
 	fname string
 	lname string
+	fname [20]rune
+	lname [20]rune
 }
 
 func main() {
@@ -21,7 +23,7 @@ func main() {
 
 	fmt.Println("Enter the file name [full path]: ")
 	name, err := reader.ReadString('\n')
-	name = strings.Trim(name, " \n") 
+	name = strings.Trim(name, " \n")
 
 	file, err := os.Open(name)
 
@@ -33,8 +35,12 @@ func main() {
 	scanner := bufio.NewScanner(file)
 
 	for scanner.Scan() {
-		line := strings.Split(scanner.Text(), " ")
-		s = append(s, person{fname: line[0], lname: line[1]})
+		line := scanner.Text()
+		p := person{}
+		i := strings.Index(line, " ")
+		copy(p.fname[:], []rune(line[:i]))
+		copy(p.lname[:], []rune(line[i+1:]))
+		s = append(s, p)
 	}
 
 	if err := scanner.Err(); err != nil {
@@ -42,6 +48,6 @@ func main() {
 	}
 
 	for _, p := range s {
-		fmt.Printf("Firstname: %s, Lastname: %s\n", p.fname, p.lname)
+		fmt.Printf("%s %s\n", string(p.fname[:]), string(p.lname[:]))
 	}
 }
